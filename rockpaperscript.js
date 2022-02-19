@@ -1,5 +1,15 @@
 console.log("Hello World");
 
+const rockBtn = document.querySelector('#RockBtn');
+const paperBtn = document.querySelector('#PaperBtn');
+const scissorsBtn = document.querySelector('#ScissorsBtn');
+const resultDiv = document.querySelector('#results');
+const playerScore = document.querySelector('#playerScore');
+const computerScore = document.querySelector('#computerScore');
+
+let playerWins = 0;
+let computerWins = 0;
+
 function computerPlay() {
 	let randNum = Math.floor(Math.random()*3);
 	let choice = "";
@@ -59,9 +69,38 @@ function playRound(playerSelection, computerSelection){
 	} else {
 		result = "choose paper rock or scissors";
 	}
-	return result;
+
+	if (result.slice(4,7)==="win"){
+		playerWins++;
+	} else if (result.slice(4,8)==="lose") {
+		computerWins++;
+	}
+	
+
+
+	if (computerWins === 5 || playerWins === 5){
+		if (computerWins === 5){
+			alert("You lose, computer wins!");
+		} else {
+			alert("You win, computer loses!");
+		}
+		playerWins = 0;
+		computerWins = 0;
+	}
+
+	playerScore.textContent = playerWins;
+	computerScore.textContent = computerWins;
+
+	const innerResultDiv = document.createElement('div');
+	innerResultDiv.textContent = result;
+	resultDiv.appendChild(innerResultDiv);
 }
 
+rockBtn.addEventListener('click', () => playRound(('rock'), computerPlay()));
+paperBtn.addEventListener('click', () => playRound(('paper'), computerPlay()));
+scissorsBtn.addEventListener('click', () => playRound('scissors', computerPlay()));
+
+/*
 function game(){
 	let playerWins = 0;
 	let computerWins = 0;
@@ -87,3 +126,4 @@ function game(){
 }
 
 game();
+*/
